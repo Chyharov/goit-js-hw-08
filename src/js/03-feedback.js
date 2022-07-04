@@ -1,37 +1,31 @@
 import throttle from 'lodash.throttle';
-
 const formFedEl = document.querySelector('.feedback-form');
 
-const KEY_FORM = 'feedback-form-state';
+let onDataForm = {};
 
-let formData = {};
-
-const populateForm = () => {
-  const savedMessage = localStorage.getItem(KEY_FORM);
-  formData = JSON.parse(savedMessage) ?? {};
-  const formDataKeys = Object.keys(formData);
+const onElForm = () => {
+  const savedMessage = localStorage.getItem('feedback-form-state');
+  onDataForm = JSON.parse(savedMessage) ?? {};
+  const formDataKeys = Object.keys(onDataForm);
 
   if (savedMessage) {
     formDataKeys.map(key => {
-      formFedEl.elements[key].value = formData[key];
+      formFedEl.elements[key].value = onDataForm[key];
     });
   }
 };
 
-const formInput = e => {
-  formData[e.target.name] = e.target.value;
-  localStorage.setItem(KEY_FORM, JSON.stringify(formData));
+const onInputForm = event => {
+  onDataForm[event.target.name] = event.target.value;
+  localStorage.setItem('feedback-form-state', JSON.stringify(onDataForm));
 };
 
-const formSubmit = e => {
-  e.preventDefault();
-  localStorage.removeItem(KEY_FORM);
- 
-  console.log(formData);
-
-  e.target.reset();
+const onSubmitForm = event => {
+  event.preventDefault();
+  localStorage.removeItem('feedback-form-state');
+  event.target.reset();
 };
 
-populateForm();
-formFedEl.addEventListener('input', throttle(formInput, 500));
-formFedEl.addEventListener('submit', formSubmit);
+onElForm();
+formFedEl.addEventListener('input', throttle(onInputForm, 500));
+formFedEl.addEventListener('submit', onSubmitForm);
