@@ -1,11 +1,11 @@
 // Add imports above this line
-import { galleryItems } from './gallery-items';
 import SimpleLightbox from "simplelightbox";
+import { galleryItems } from './gallery-items';
 import "simplelightbox/dist/simple-lightbox.min.css";
 // Change code below this line
-const galleryList = document.querySelector(".gallery");
+const galleryListEl = document.querySelector(".gallery");
 
-const makeGallery = galleryItems
+const galleryEl = galleryItems
   .map(
     ({ preview, original, description }) =>
       `<a class="gallery__item" href="${original}">
@@ -16,9 +16,9 @@ const makeGallery = galleryItems
   )
   .join("");
 
-galleryList.insertAdjacentHTML("afterbegin", makeGallery);
+galleryListEl.insertAdjacentHTML("afterbegin", galleryEl);
 
- new SimpleLightbox(".gallery__item", {
+ new SimpleLightbox('.gallery a', {
     captionsData: "alt",
     captionDelay: "250",
     enableKeyboard: "true",
