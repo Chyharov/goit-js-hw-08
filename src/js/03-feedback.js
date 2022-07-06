@@ -23,6 +23,8 @@ const onInputForm = event => {
 const onSubmitForm = event => {
   event.preventDefault();
   localStorage.removeItem('feedback-form-state');
+  console.log(onDataForm);
+  
   event.target.reset();
 };
 
